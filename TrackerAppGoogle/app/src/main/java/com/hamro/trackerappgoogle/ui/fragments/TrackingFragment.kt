@@ -16,6 +16,7 @@ import com.hamro.trackerappgoogle.others.Constants.ACTION_START_OR_RESUME_SERVIC
 import com.hamro.trackerappgoogle.others.Constants.MAP_ZOOM
 import com.hamro.trackerappgoogle.others.Constants.POLYLINE_COLOR
 import com.hamro.trackerappgoogle.others.Constants.POLYLINE_WIDTH
+import com.hamro.trackerappgoogle.others.TrackingUtility
 import com.hamro.trackerappgoogle.services.Polyline
 import com.hamro.trackerappgoogle.services.TrackingService
 import com.hamro.trackerappgoogle.ui.viewmodels.MainViewModel
@@ -30,6 +31,8 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
     private var isTracking=false
     private var pathPoints= mutableListOf<Polyline>()
     private var map: GoogleMap? = null
+    private var curTimeInMillis = 0L
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mapView.onCreate(savedInstanceState)
@@ -51,6 +54,12 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
             pathPoints = it
             addLatestPolyline()
             moveCameraToUser()
+        })
+
+        TrackingService.timeRunInMillis.observe(viewLifecycleOwner, Observer {
+            curTimeInMillis = it
+            val formattedTime = TrackingUtility.getFormattedStopWatchTime(curTimeInMillis, true)
+            tvTimer.text = formattedTime
         })
     }
     private fun toggleRun() {
