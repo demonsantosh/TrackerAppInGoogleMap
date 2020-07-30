@@ -11,11 +11,12 @@ import com.hamro.trackerappgoogle.R
 import com.hamro.trackerappgoogle.others.Constants.KEY_FIRST_TIME_TOGGLE
 import com.hamro.trackerappgoogle.others.Constants.KEY_NAME
 import com.hamro.trackerappgoogle.others.Constants.KEY_WEIGHT
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_setup.*
 import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class SetupFragment : Fragment(R.layout.fragment_setup) {
 
     @Inject
